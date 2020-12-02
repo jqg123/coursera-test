@@ -1,0 +1,64 @@
+<html>
+<head>
+<style>
+  body {
+    background-color: #add8e6;}
+  }
+</style>
+<header>
+  <h1>A Weather App</h1>
+  <h2>Forcast for Today</h2>
+</header>
+<body>
+  <p id="demo" >Loading...</p>
+<script>
+var getJSON = function(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status == 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status);
+      }
+    };
+    xhr.send();
+};
+
+getJSON('https://mm214.com/demo.php', function(err, data) {
+  if (err != null) {
+    alert('Something went wrong: ' + err);
+  } else {
+  	
+  	   for (x in data){
+  	   	 console.log("key is " + x + " and value is " + data[x]);
+  	   		}
+       
+        var temp = data.main.temp*(9/5)-459.67
+        var desc = data.weather[0].description
+         document.getElementById("demo").innerHTML = 'Temperature: ' + Math.trunc(temp) + 'F ' + "<br/>" + 'Description: ' +desc + "<br/>" + 'Location: ' + data.name;
+
+        
+       }
+     console.log(data);
+      console.log(data.main);
+      console.log(data.main.temp);
+      console.log(data.name);
+      console.log(data.weather);
+      console.log(data.wind);
+      console.log(data.coord);
+      console.log(data.weather[0].description);
+    }
+    
+    //lert('Your Json result is:  ' + data.result);
+  
+) ;
+
+</script>
+</head>
+<body>
+<div id = "response"></div>
+</body>
+</html>
